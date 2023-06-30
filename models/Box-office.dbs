@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Box-office-movies" id="Project-12dd" database="LogicalDesign" >
+	<schema name="INSTANCE" catalogname="Box-office-movies" >
+		<table name="Dim_Actor" prior="Act" >
+			<column name="ActorID" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="ActorName" type="VARCHAR" length="100" jt="12" />
+			<column name="MovieCount" type="BIGINT" jt="-5" />
+			<index name="pk_Dim_Actor" unique="PRIMARY_KEY" >
+				<column name="ActorID" />
+			</index>
+		</table>
+		<table name="Dim_Date" prior="Dim_" >
+			<column name="Date" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="Year" type="BIGINT" jt="-5" />
+			<column name="Month" type="VARCHAR" length="25" jt="12" />
+			<column name="Day" type="INT" jt="4" />
+			<column name="Quarter" type="INT" jt="4" />
+			<index name="pk_Dim_Date" unique="PRIMARY_KEY" >
+				<column name="Date" />
+			</index>
+		</table>
+		<table name="Dim_Genre" prior="Entity_0" >
+			<column name="GenreID" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="GenreType" prior="GenreName" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Dim_Genre" unique="PRIMARY_KEY" >
+				<column name="GenreID" />
+			</index>
+		</table>
+		<table name="Dim_Language" prior="Entity_1" >
+			<column name="LanguageID" type="INT" jt="4" mandatory="y" />
+			<column name="LanguageName" type="VARCHAR" length="100" jt="12" />
+			<index name="pk_Dim_Language" unique="PRIMARY_KEY" >
+				<column name="LanguageID" />
+			</index>
+		</table>
+		<table name="Dim_Location" prior="Dim_Country" >
+			<column name="LocationID" prior="CountryID" type="BIGINT" length="2" jt="-5" mandatory="y" />
+			<column name="StateID" type="VARCHAR" length="200" jt="12" />
+			<column name="City" prior="CityID" type="VARCHAR" length="200" jt="12" />
+			<column name="Zipcode" type="VARCHAR" length="20" jt="12" />
+			<column name="Country" type="VARCHAR" length="20" jt="12" />
+			<index name="unq_StateID" unique="UNIQUE_INDEX" >
+				<column name="StateID" />
+			</index>
+			<index name="unq_CityID" unique="UNIQUE_INDEX" >
+				<column name="City" />
+			</index>
+			<index name="unq_Zipcode" unique="UNIQUE_INDEX" >
+				<column name="Zipcode" />
+			</index>
+			<index name="pk_LocationID" unique="PRIMARY_KEY" >
+				<column name="LocationID" />
+			</index>
+		</table>
+		<table name="Dim_Movies" prior="Entity" >
+			<column name="MovieID" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="MovieName" type="VARCHAR" length="100" jt="12" />
+			<column name="GenreID" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="Location" prior="CountryID" type="BIGINT" length="2" jt="-5" mandatory="y" />
+			<column name="LanguageID" type="INT" jt="4" />
+			<index name="pk_Dim_Movies" unique="PRIMARY_KEY" >
+				<column name="MovieID" />
+			</index>
+			<index name="unq_GenreID" unique="UNIQUE_INDEX" >
+				<column name="GenreID" />
+			</index>
+			<index name="unq_CountryID" unique="UNIQUE_INDEX" >
+				<column name="Location" />
+			</index>
+			<fk name="fk_Dim_Movies_Dim_Genre" to_schema="Box-office-movies.INSTANCE" to_table="Dim_Genre" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="GenreID" pk="GenreID" />
+			</fk>
+			<fk name="fk_Dim_Movies_Dim_Location" to_schema="Box-office-movies.INSTANCE" to_table="Dim_Location" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="Location" pk="LocationID" />
+			</fk>
+			<fk name="fk_Dim_Movies_Dim_Language" to_schema="Box-office-movies.INSTANCE" to_table="Dim_Language" type="NonIdentifying" mandatory="n" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="LanguageID" pk="LanguageID" />
+			</fk>
+		</table>
+		<table name="Dim_Revenue" prior="Entity_0" />
+		<table name="Entity" />
+		<table name="Entity_0" />
+		<table name="Fact" prior="Fact_" >
+			<column name="Revenue" type="DECIMAL" length="100" decimal="2" jt="3" />
+			<column name="Movie" type="BIGINT" jt="-5" />
+			<column name="Date" type="BIGINT" jt="-5" />
+			<column name="Actor" type="BIGINT" jt="-5" />
+			<column name="IMDB-RATINGS" type="DECIMAL" length="3" decimal="2" jt="3" />
+			<column name="TMDB-RATINGS" type="DECIMAL" length="3" decimal="2" jt="3" />
+			<column name="OMDB-RATINGS" type="DECIMAL" length="3" decimal="2" jt="3" />
+			<index name="pk_Date" unique="UNIQUE_KEY" >
+				<column name="Date" />
+			</index>
+			<index name="pk_Date_001" unique="UNIQUE_KEY" >
+				<column name="Date" />
+			</index>
+			<index name="pk_Date_002" unique="UNIQUE_KEY" >
+				<column name="Date" />
+			</index>
+			<index name="pk_Date_003" unique="UNIQUE_KEY" >
+				<column name="Date" />
+			</index>
+			<index name="pk_Date_004" unique="UNIQUE_KEY" >
+				<column name="Date" />
+			</index>
+			<index name="pk_Movie" unique="UNIQUE_KEY" >
+				<column name="Movie" />
+			</index>
+			<fk name="fk_Fact_Dim_Date" to_schema="Box-office-movies.INSTANCE" to_table="Dim_Date" type="NonIdentifying" mandatory="n" cardinality="OneMore" range_from="0" range_to="0" >
+				<fk_column name="Date" pk="Date" />
+			</fk>
+			<fk name="fk_Fact_Dim_Movies" to_schema="Box-office-movies.INSTANCE" to_table="Dim_Movies" type="NonIdentifying" mandatory="n" cardinality="OneMore" range_from="0" range_to="0" >
+				<fk_column name="Movie" pk="MovieID" />
+			</fk>
+			<fk name="fk_Fact_Dim_Actor" to_schema="Box-office-movies.INSTANCE" to_table="Dim_Actor" type="NonIdentifying" mandatory="n" cardinality="OneMore" range_from="0" range_to="0" >
+				<fk_column name="Actor" pk="ActorID" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-daa" show_column_type="y" show_relation="columns" >
+		<entity schema="Box-office-movies.INSTANCE" name="Dim_Actor" color="C1D8EE" x="320" y="48" />
+		<entity schema="Box-office-movies.INSTANCE" name="Dim_Date" color="C1D8EE" x="48" y="144" />
+		<entity schema="Box-office-movies.INSTANCE" name="Dim_Genre" color="C1D8EE" x="1088" y="320" />
+		<entity schema="Box-office-movies.INSTANCE" name="Dim_Language" color="C1D8EE" x="1056" y="464" />
+		<entity schema="Box-office-movies.INSTANCE" name="Dim_Location" color="C1D8EE" x="1056" y="128" />
+		<entity schema="Box-office-movies.INSTANCE" name="Dim_Movies" color="C1D8EE" x="576" y="240" />
+		<entity schema="Box-office-movies.INSTANCE" name="Fact" color="C1D8EE" x="304" y="432" />
+	</layout>
+</project>
