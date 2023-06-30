@@ -1,1 +1,1 @@
-scripts goes here
+scripts go here
