@@ -4,6 +4,9 @@ Evaluation of box office movies based on reviews, box office information and the
 ## Final Presentation Link
 https://docs.google.com/presentation/d/1lPqJCIubhL2KEZSuauPiVIC2GYEAQ4BZs1KDNY4evNg/edit?usp=sharing
 
+## Final Report Link
+https://docs.google.com/document/d/1OvdMGfKBnJqeUlJvJrZUtkqtM1HtJHjJToSuVNh8zGI/edit?usp=sharing
+
 ## Data to Consider 
 
 We will consider the following data. 
